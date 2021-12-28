@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+    .block{
+        margin: auto;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items:  center;
+        width: 800px;
+    }
+
+    #objs{
+        display: flex;
+        justify-content: space-between;
+        margin: auto;
+        height: 200px;
+    }
+    .obj{
+        text-align: center;
+    }
+    {% if methode != 'Algorithme Polynomiale' %}
+    #objs{
+        width: 820px;
+    }
+    .brRight{
+        border-right: 4px solid rgb(3, 239, 98);
+        padding-right: 40px;
+    }
+    {% endif %}
+    h2{
+        color: rgb(3, 239, 98);
+        font-size: 32px;
+    }
+    .nbTaches{
+        padding: 7px;
+        border: 2px solid rgb(252, 206, 13);
+        border-radius: 3px;
+        font-size: 18px;
+        color: #fff;
+        text-decoration: none;
+    }
+    .nbTaches:hover{
+        background-color: rgb(252, 206, 13);
+        color: #05192D;
+        font-weight: bold;
+    }
+    form{
+        margin-top: 20px;
+        margin-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+    }
+    label{
+        padding: 7px;
+        border: 2px solid white;
+        border-radius: 3px;
+        font-size: 18px;
+        color: #fff;
+        text-decoration: none;
+        width: 260px;
+        margin: auto;
+        margin-top: 20px;
+        text-align: center;
+        cursor: pointer;
+    }
+    label:hover{
+        background-color: white;
+        color: #05192D;
+        font-weight: bold;
+    }
+    input[type='submit']{
+        cursor: pointer;
+        border-radius: 3px;
+        padding: 5px;
+        background-color: rgb(3, 239, 98);
+        border: none;
+        font-family: montserrat;
+        color: #05192D;
+        font-weight: bold;
+    }
+    input[type='submit']:hover{
+        background-color: rgb(75, 245, 143);
+    }
+    select{
+        padding: 5px;
+        font-family: montserrat;
+        color: #05192D;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    #retour{
+        padding: 5px;
+        background-color: rgb(3, 239, 98);
+        color: #05192D;
+        font-weight: bold;
+        border-radius: 3px;
+        text-decoration: none;
+        margin-bottom: 30px
+    }
+    #retour:hover{
+        background-color: rgb(75, 245, 143);
+    }
+    button{
+        border: 2px solid rgb(239, 255, 246);
+        padding: 5px;
+        margin-bottom: 10px;
+        background-color: #05192D;
+        color: rgb(3, 239, 98);
+    }
+</style>
+
+<h1>{{methode}}</h1>
+
+{% if methode == 'Programmation Dynamique' %}
+
+    {% set type = 'views.DP' %}
+
+{% elif methode == 'Métaheuristique' %}
+
+    {% set type = 'views.meta' %}
+
+{% else %}
+
+    {% set type = 'views.poly' %}
+
+{% endif %}
+
+
+<div class="block" id="block">
+
+    <a href="{{ url_for('views.home') }}" id="retour">
+        <i class="fas fa-backward"></i>
+        Retour
+    </a>
+
+    <div id="objs">
+        <div class="obj brRight">
+            <h2>Objectif 1</h2>
+            <a href="{{ url_for(type, obj=1, nbTaches=10) }}" class="nbTaches">P1_n10</a>
+            <a href="{{ url_for(type, obj=1, nbTaches=50) }}" class="nbTaches">P1_n50</a>
+            <a href="{{ url_for(type, obj=1, nbTaches=200) }}" class="nbTaches">P1_n200</a>
+            <a href="{{ url_for(type, obj=1, nbTaches=500) }}" class="nbTaches">P1_n500</a>
+        </div>
+        {% if methode != 'Algorithme Polynomiale' %}
+        <div class="obj">
+            <h2>Objectif 2</h2>
+            <a href="{{ url_for(type, obj=2, nbTaches=10) }}" class="nbTaches">P2_n10</a>
+            <a href="{{ url_for(type, obj=2, nbTaches=100) }}" class="nbTaches">P2_n100</a>
+            <a href="{{ url_for(type, obj=2, nbTaches=200) }}" class="nbTaches">P2_n200</a>
+            <a href="{{ url_for(type, obj=2, nbTaches=500) }}" class="nbTaches">P2_n500</a>
+        </div>
+        {% endif %}
+    </div>
+    <form action = "{{ url_for('views.upload', algo=methode) }}" method = "POST" enctype = "multipart/form-data">
+        <input id="upload" type = "file" name = "file" hidden/>
+        <label for="upload">
+            Charger Votre Propre Fichier
+            <i class="fas fa-upload"></i>
+        </label> <br>
+        <select id="obj" name="obj">
+            <option value="obj1">Objectif 1</option>
+            {% if methode != 'Algorithme Polynomiale' %}
+                <option value="obj2">Objectif 2</option>
+            {% endif %}
+        </select> <br>
+        <input type = "submit"/>
+    </form>
+    
+    <div id="down">
+        <p>
+            {% if resultat is defined %}
+                
+                <script>
+                    window.scrollTo(0,document.body.scrollHeight);
+                </script>
+                
+                La solution de la fonction objectif est : {{ resultat[0] }} <br><br>
+
+                {% for tache in resultat[1] %}
+                    <button>{{tache[1]}}</button><button>{{tache[0]}}</button><button>{{tache[2]}}</button>
+                    {% if loop.index < loop.length  %}
+                        <i class="fas fa-arrow-right" style="color:rgb(3, 239, 98);"></i>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </p>
+    </div>
+</div>
+    
+<!-- polynomiale: fff [[]] return (sequence, val) 
+metaheuristic: obj1: met_fun1([[]]) return (sequence, val)
+               obj2: met_fun([[]]) return (sequence, val) -->
+
+{% endblock %}

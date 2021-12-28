@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    
+    span{
+        background-color: rgb(3, 239, 98);
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-family: montserrat-bold;
+        font-size: 24px;
+        color: #05192D;
+        text-align: center;
+    }
+
+    .block{
+        margin: auto;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 550px;
+    }
+    #choix{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        padding: 25px;
+        border: solid rgb(252, 206, 13) 2px; 
+        border-radius: 4px;
+        text-align: center;
+    }
+    a{
+        color: #fff;
+        text-decoration: none;
+    }
+    .borRight{
+        border-right: 2px solid rgb(252, 206, 13);
+        padding-right: 30px;
+    }
+    a:hover{
+        color: rgb(252, 206, 13);
+        font-weight: bold;
+    }
+</style>
+
+<h1>Problème d'ordannancement</h1>
+
+<div class="block">
+    <p>
+    Les problèmes d'ordonnancement font partie de notre vie quotidienne !<br>
+    Qui ne s'est jamais trouvé avec une liste de "choses à faire" et ne pas savoir par quel bout les prendre ?<br>
+    Ces problèmes concernent bien évidemment aussi de nombreuses activités des entreprises.<br>
+    Le problème central de l'ordonnancement consiste à déterminer le calendrier d'exécution de tâches liées entre elles par des contraintes "temporelles", de manière à minimiser la durée totale.
+    </p>
+
+    <span>
+        Let's get started <br>
+        <i class="fas fa-angle-double-down" style="margin-top: 5px;"></i>
+    </span>
+
+    <div id="choix">
+        <a href="{{ url_for('views.methodes', type='Programmation Dynamique') }}" class="borRight">Prog. Dynamique</a>
+        <a href="{{ url_for('views.methodes', type='Métaheuristique') }}" class="borRight">Métaheuristique</a>
+        <a href="{{ url_for('views.methodes', type='Algorithme Polynomiale') }}">Polynomiale</a>
+    </div>
+</div>
+    
+{% endblock %}
