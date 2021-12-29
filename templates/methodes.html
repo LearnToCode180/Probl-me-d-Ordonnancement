@@ -3,10 +3,12 @@
 {% block content %}
 
 <style>
-
+    h1{
+        margin-top: 10px;
+    }
     .block{
         margin: auto;
-        margin-top: 20px;
+        margin-top: 10px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -50,7 +52,7 @@
         font-weight: bold;
     }
     form{
-        margin-top: 20px;
+        margin-top: 10px;
         margin-bottom: 30px;
         display: flex;
         flex-direction: column;
@@ -100,7 +102,7 @@
         font-weight: bold;
         border-radius: 3px;
         text-decoration: none;
-        margin-bottom: 30px
+        margin-bottom: 20px
     }
     #retour:hover{
         background-color: rgb(75, 245, 143);
@@ -111,6 +113,19 @@
         margin-bottom: 10px;
         background-color: #05192D;
         color: rgb(3, 239, 98);
+    }
+    #down{
+        background-color: #ff1e00;
+        border: none;
+        color: #05192D;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 14px;
+        font-family: montserrat;
+    }
+    #down:hover{
+        background-color: #e0321a;
     }
 </style>
 
@@ -171,13 +186,28 @@
         <input type = "submit"/>
     </form>
     
-    <div id="down">
+    <script>
+        $(document).ready(function() {
+            $("#down").click(function() {
+                $("html, body").animate({
+                    scrollTop: $(
+                      'html, body').get(0).scrollHeight
+                }, 1000);
+            });
+        });
+    </script>
+
+    {% if resultat is defined %}
+    <button id="down">
+        Afficher les Résultats <br>
+        <i class="fas fa-angle-double-down" style="margin-top: 5px;"></i>
+    </button>
+    
+    <div>
         <p>
-            {% if resultat is defined %}
+            
                 
-                <script>
-                    window.scrollTo(0,document.body.scrollHeight);
-                </script>
+                
                 
                 La solution de la fonction objectif est : {{ resultat[0] }} <br><br>
 
