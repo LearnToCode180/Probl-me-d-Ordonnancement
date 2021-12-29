@@ -1,11 +1,13 @@
 from flask import Blueprint, render_template, request
 from functions import fc_ob, fo_ob2, fff, met_fun1, met_fun2
 from data import *
+import flask
 
 views = Blueprint(__name__, "views")
 
 @views.route("/")
 def home():
+    print('**********' + str(flask.__version__))
     return render_template('index.html')
 
 @views.route("/methodes/<type>")
