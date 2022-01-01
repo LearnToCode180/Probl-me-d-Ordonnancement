@@ -113,6 +113,7 @@
         margin-bottom: 10px;
         background-color: #05192D;
         color: rgb(3, 239, 98);
+        font-family: montserrat;
     }
     #down{
         background-color: #ff1e00;
@@ -126,6 +127,11 @@
     }
     #down:hover{
         background-color: #e0321a;
+    }
+    .tache{
+        background-color: rgb(3, 239, 98);
+        color: #05192D;
+        font-weight: bold;
     }
 </style>
 
@@ -204,20 +210,22 @@
     </button>
     
     <div>
-        <p>
-            
-                
-                
-                
+        <p>                    
                 La solution de la fonction objectif est : {{ resultat[0] }} <br><br>
 
                 {% for tache in resultat[1] %}
-                    <button>{{tache[1]}}</button><button>{{tache[0]}}</button><button>{{tache[2]}}</button>
+                    <button>{{tache[1]}}</button><button class="tache">{{tache[0]}}</button><button>{{tache[2]}}</button>
                     {% if loop.index < loop.length  %}
                         <i class="fas fa-arrow-right" style="color:rgb(3, 239, 98);"></i>
                     {% endif %}
                 {% endfor %}
-            {% endif %}
+                <br><br>
+                <div style="text-align: center;">
+                    <button>Temps de début</button><button class="tache">Numéro de la Tache</button><button>Temps de fin</button>
+                </div>
+                
+    {% endif %}
+
         </p>
     </div>
 </div>
