@@ -38,7 +38,7 @@
     .nbTaches{
         padding: 7px;
         border: 2px solid rgb(252, 206, 13);
-        border-radius: 3px;
+        border-radius: 20px/50px;
         font-size: 18px;
         color: #fff;
         text-decoration: none;
@@ -131,6 +131,75 @@
         color: #05192D;
         font-weight: bold;
     }
+
+    
+
+
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        transition: opacity 500ms;
+        visibility: hidden;
+        opacity: 0;
+      }
+
+    .overlay:target {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .popup {
+        margin: 70px auto;
+        height: 120px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 5px;
+        width: 50%;
+        position: relative;
+        transition: all 5s ease-in-out;
+      }
+      
+      .popup h2 {
+        margin-top: 0;
+        color: #05192D;
+        font-family: Tahoma, Arial, sans-serif;
+        margin-bottom: 50px;
+      }
+
+      .poplink{
+        text-decoration: none;
+        color: #05192D;
+        border: 1px #05192D solid;
+        padding: 10px;
+        border-radius: 20px/50px;
+        margin: 10px;
+        margin-bottom: 50px;
+      }
+
+      .poplink:hover{
+        background-color: #05192D;
+        color:rgb(3, 239, 98);
+      }
+
+      .popup .close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        transition: all 200ms;
+        font-size: 30px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #333;
+      }
+      .popup .close:hover {
+        color: rgb(3, 239, 98);
+      }
+
 </style>
 
 <h1>{{methode}}</h1>
@@ -160,7 +229,7 @@
     <div id="objs">
         <div class="obj brRight">
             <h2>Objectif 1</h2>
-            <a href="{{ url_for(type, obj=1, nbTaches=10) }}" class="nbTaches">P1_n10</a>
+            <a  href="{{ url_for(type, obj=1, nbTaches=10) }}" class="nbTaches">P1_n10</a>
             <a href="{{ url_for(type, obj=1, nbTaches=50) }}" class="nbTaches">P1_n50</a>
             <a href="{{ url_for(type, obj=1, nbTaches=200) }}" class="nbTaches">P1_n200</a>
             <a href="{{ url_for(type, obj=1, nbTaches=500) }}" class="nbTaches">P1_n500</a>
@@ -175,6 +244,21 @@
         </div>
         {% endif %}
     </div>
+
+
+    <div id="popup1" class="overlay">
+        <div class="popup">
+            <h2>Quelle option voulez-vous choisir ?</h2>
+            <a class="close" href="#">&times;</a>
+            <div class="content">
+                <a href="{{ url_for(type, obj=1, nbTaches=10) }}" class="poplink">Afficher Une seule Solution</a>
+                <a href="{{ url_for(type, obj=1, nbTaches=10) }}" class="poplink">Afficher Toutes Les Solution Possibles</a>
+            </div>
+        </div>
+    </div>
+
+
+
     <form action = "{{ url_for('views.upload', algo=methode) }}" method = "POST" enctype = "multipart/form-data">
         <input id="upload" type = "file" name = "file" hidden/>
         <label for="upload">
@@ -209,18 +293,21 @@
     
     <div>
         <p>                    
-                La solution de la fonction objectif est : {{ resultat[0] }} <br><br>
+            
+            
+            La solution de la fonction objectif est : {{ resultat[0] }} <br><br>
 
-                {% for tache in resultat[1] %}
-                    <button>{{tache[1]}}</button><button class="tache">{{tache[0]}}</button><button>{{tache[2]}}</button>
-                    {% if loop.index < loop.length  %}
-                        <i class="fas fa-arrow-right" style="color:rgb(3, 239, 98);"></i>
-                    {% endif %}
-                {% endfor %}
-                <br><br>
-                <div style="text-align: center;">
-                    <button>Temps de début</button><button class="tache">Numéro de la Tache</button><button>Temps de fin</button>
-                </div>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <button>Temps de début</button><button class="tache">Numéro de la Tache</button><button>Temps de fin</button>
+            </div>
+
+            {% for tache in resultat[1] %}
+                <button>{{tache[1]}}</button><button class="tache">{{tache[0]}}</button><button>{{tache[2]}}</button>
+                {% if loop.index < loop.length  %}
+                    <i class="fas fa-arrow-right" style="color:rgb(3, 239, 98);"></i>
+                {% endif %}
+            {% endfor %}
+            <br><br>
                 
     {% endif %}
 

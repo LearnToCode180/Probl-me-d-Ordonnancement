@@ -41,25 +41,30 @@ def ord(t):#  ordonner les taches selant les dates d’échéance des tâches di
     return t
 
 
+import time
+start_time = time.time()
+
 def fuun(y,e):
     mx=0
+   # ele_a_retire=[]
     for i in range(len(y)):
+       
         for j in range(len(e)):
-            if y[i]==e[j][0] and mx<e[j][1]: # ce bloc d'instruction permet    
+            if y[i][0]==e[j][0] and mx<e[j][1]: # ce bloc d'instruction permet    
                 mx=e[j][1]                   # de determiner la tche dont la duree est superieur pour 
-                ele_a_retire=e[j][0]         #la retirer dans la liste des tache sont retard
+                ele_a_retire=e[j] #[0] #la retirer dans la liste des tache sont retard
+                                  
     y.remove(ele_a_retire)  # retirer  la tache 
     return y,mx,ele_a_retire # le mx pour   deduction de la dure de lache retir & ele_a_retire pour garder les elements retiree dans une list  
-
-
 def fff(e):
-    e=ord(e)
+    print('8*****************************8')
+    e.sort(key=lambda  k:(k[2])) #  ordonner les taches selant les dates d’échéance des tâches di
     somme_pi=0# somme des durie des tache qui ne sont pas en retard (les tache qui sont dans la liste t1)
     t1=[]# cette liste va contiet les taches qui ne sont pas en retard 
     t2=[]# cette liste va garder les tache retirer dans t1
     foct_obje=0
     for i in range(len(e)):
-        t1.append(e[i][0])# 
+        t1.append(e[i])#[0])# 
         somme_pi+=e[i][1]# la dure de la tche que ona que o nait vient d'ajouter a list 
         if somme_pi>e[i][2]:# cd pour tester si la tache est en retard ou non? 
            t1,pi,tach_retirer=fuun(t1,e)# cette fonction va retirer la tche avecla dure sup parmi les taches de la list t1 
@@ -67,10 +72,13 @@ def fff(e):
            t2.append(tach_retirer)
            foct_obje+=1
     t1=t1+t2
-    print('la fct objec=',foct_obje)
-    return (foct_obje,t1)
     
-print("--- %s seconds ---" % (time.time() - start_time))         
+    c=0
+    tt=[]
+    for j in t1:# diagramme de gant 
+        tt.append([j[0],c,c+j[1]])
+        c+=j[1]
+    return (foct_obje, tt)  
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 #                        metaheyristique   
@@ -143,12 +151,13 @@ def N1(x,l):  #  cette fonction regroupe les stucture de voisinage qui va etre u
         return inse_op(x)
     else:
         return swap(x)
+    
 start_time=time.time()
 
-def Rvns(x):
+def Rvns(x, temps):
 
     l=0
-    while((time.time() - start_time)<20):
+    while((time.time() - start_time) < temps):
     
          c=0
          x2=N(x,l)
@@ -164,10 +173,20 @@ def Rvns(x):
     return x
         
 
-def met_fun1(x):
-    x=Rvns(x)
-    val = 0
-    while((time.time() - start_time)<30):
+def met_fun1(x, nbTaches):
+    if nbTaches <= 10:
+        temps = 10
+    elif nbTaches <= 50:
+        temps = 25
+    elif nbTaches <= 200:
+        temps = 60
+    else:
+        temps = 120 
+        
+    x=Rvns(x, temps)
+    start_time=time.time()
+    
+    while((time.time() - start_time)< temps):
         k=0
         #cc=0
         while(k<3):
@@ -184,6 +203,7 @@ def met_fun1(x):
                 b=val_obj_fun(x2)
                 if b<=a:
                     x1=x2[:]
+                    #l=0
                 # c+=1
                 # if c>3:
                 #     l+=1
@@ -192,6 +212,7 @@ def met_fun1(x):
             #print('vvvvvvvvvv',val)
             if val>=b:
                 x=x2[:]
+                #k=0
             # cc+=1
             # if cc>3:
             #     k+1
@@ -235,9 +256,20 @@ def val_obj_fun1(seq):
     return (val,seqq)
 
 start_time=time.time()
-def met_fun2(x):
-    val = ()
-    while((time.time() - start_time)<10):
+def met_fun2(x, nbTaches):
+    
+    if nbTaches <= 10:
+        temps = 10
+    elif nbTaches <= 50:
+        temps = 25
+    elif nbTaches <= 200:
+        temps = 60
+    else:
+        temps = 120 
+        
+    
+    start_time=time.time()
+    while((time.time() - start_time) < temps):
         k=0
         while(k<3):
             x1=N(x,k)
@@ -248,10 +280,12 @@ def met_fun2(x):
                 b=val_obj_fun1(x2)
                 if b<a:
                     x1=x2[:]
+                    #l=0
                 l+=1
             val=val_obj_fun1(x)
             if val>b:
                 x=x2[:]
+               # k=0
             k+=1
     #print(val)   
     return val

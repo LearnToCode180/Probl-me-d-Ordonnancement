@@ -55,7 +55,7 @@ def meta(obj, nbTaches):
             data = data1_200
         else:
             data = data1_500
-        return render_template('methodes.html', methode="Métaheuristique", resultat=met_fun1(data))
+        return render_template('methodes.html', methode="Métaheuristique", resultat=met_fun1(data, int(nbTaches)))
     
     else:
         if int(nbTaches) == 10:
@@ -67,7 +67,7 @@ def meta(obj, nbTaches):
         else:
             data = data2_500
         
-        return  render_template('methodes.html', methode="Métaheuristique", resultat=met_fun2(data))
+        return  render_template('methodes.html', methode="Métaheuristique", resultat=met_fun2(data, int(nbTaches)))
 
 #---------------------------------------------------Algorithme Polynomiale---------------------------------------------------#
     
@@ -96,14 +96,33 @@ def upload(algo):
         list_P1 = f.readline().split()
         list_D1 = f.readline().split()
         
+        
         list_P1 = list(map(int, list_P1))
         list_D1 = list(map(int, list_D1))
-
-        data = [[i, list_P1[i], list_D1[i]] for i in range(nb)]
         
-        if algo == 'Programmation Dynamique':
-            return render_template('methodes.html', methode="Programmation Dynamique", resultat=fc_ob(data))
-        elif algo == 'Métaheuristique':
-            return render_template('methodes.html', methode="Métaheuristique", resultat=met_fun1(data))
+        if request.form.get('obj') == 'obj1':
+
+            data = [[i, list_P1[i], list_D1[i]] for i in range(nb)]
+        
+            if algo == 'Programmation Dynamique':
+                return render_template('methodes.html', methode="Programmation Dynamique", resultat=fc_ob(data))
+            elif algo == 'Métaheuristique':
+                return render_template('methodes.html', methode="Métaheuristique", resultat=met_fun1(data, nb))
+            else:
+                return render_template('methodes.html', methode="Algorithme Polynomiale", resultat=fff(data))
+                
+                
         else:
-            return render_template('methodes.html', methode="Algorithme Polynomiale", resultat=fff(data))
+            list_ai = f.readline().split()
+            list_bi = f.readline().split()
+            
+            list_ai = list(map(int, list_ai))
+            list_bi = list(map(int, list_bi))
+            
+            data = [[i, list_P1[i], list_D1[i], list_ai[i], list_bi[i]] for i in range(nb)]
+            
+            if algo == 'Programmation Dynamique':
+                 return  render_template('methodes.html', methode="Programmation Dynamique", resultat=fo_ob2(data))
+            else:
+                return  render_template('methodes.html', methode="Métaheuristique", resultat=met_fun2(data, nb))
+            

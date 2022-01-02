@@ -3,7 +3,9 @@
 {% block content %}
 
 <style>
-    
+    body{
+        margin: 0;
+    }
     span{
         background-color: rgb(3, 239, 98);
         padding: 10px;
@@ -45,6 +47,34 @@
         color: rgb(252, 206, 13);
         font-weight: bold;
     }
+    .creators{
+        margin-top: 30px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        background-color: #999999;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .circular_img{
+        position: relative; 
+        width: 200px; 
+        height: 200px; 
+        overflow: hidden; 
+        border-radius: 50%;
+        border: 3px solid rgb(255, 255, 255);
+    }
+    .circular_img img{
+        width: 100%; 
+        height: auto;
+    }
+    .name{
+        display: flex;
+        flex-direction: column;
+        width: 180px;
+        font-weight: bold;
+    }
+    
 </style>
 
 <h1>Problème d'ordannancement</h1>
@@ -67,6 +97,36 @@
         <a href="{{ url_for('views.methodes', type='Métaheuristique') }}" class="borRight">Métaheuristique</a>
         <a href="{{ url_for('views.methodes', type='Algorithme Polynomiale') }}">Polynomiale</a>
     </div>
+
+    
 </div>
+
+<div class="creators">
+    
+    <div class="circular_img">
+        <img src="/static/images/anas.png" alt="Azdad Anas">
+    </div>
+
+    <div style="display: flex;" >
+        <div class="name">
+            <img height="128px" width="128px" src="/static/images/right-arrows.png" alt="right-arrow" style="transform: scaleX(-1);">
+            Azdad Anas 
+        </div>
+        
+    
+        <h1 style="color:rgb(255, 255, 255); font-size:45px; margin-right: 40px;">Réalisé par</h1>
+    
+        <div class="name">
+            <img height="128px" width="128px" src="/static/images/right-arrows.png" alt="right-arrow">
+            Abdessamad Hennani
+        </div>
+    </div>
+    
+    
+    <div class="circular_img">
+        <img src="/static/images/abdessamad.jpg" alt="Abedessamad Hennani">
+    </div>
+</div>
+
     
 {% endblock %}
