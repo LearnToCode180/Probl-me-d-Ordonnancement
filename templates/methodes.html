@@ -54,7 +54,7 @@
         display: flex;
         flex-direction: column;
     }
-    label{
+    #upload{
         padding: 7px;
         border: 2px solid white;
         border-radius: 3px;
@@ -67,10 +67,23 @@
         text-align: center;
         cursor: pointer;
     }
-    label:hover{
+    #upload:hover{
         background-color: white;
         color: #05192D;
         font-weight: bold;
+    }
+    #notice{
+        padding: 7px;
+        border: 2px solid white;
+        border-radius: 3px;
+        font-size: 18px;
+        background-color: white;
+        color: #05192D;
+        text-decoration: none;
+        width: 500px;
+        margin: auto;
+        text-align: center;
+        margin-bottom: 20px;
     }
     input[type='submit']{
         cursor: pointer;
@@ -202,7 +215,7 @@
 
 </style>
 
-<h1>{{methode}}</h1>
+<h1 style="margin-bottom: 20px;">{{methode}}</h1>
 
 {% if methode == 'Programmation Dynamique' %}
 
@@ -220,6 +233,24 @@
 
 
 <div class="block" id="block">
+
+    <script>
+        $(document).ready(function() {
+            $("#down").click(function() {
+                $("html, body").animate({
+                    scrollTop: $(
+                      'html, body').get(0).scrollHeight
+                }, 1000);
+            });
+        });
+    </script>
+
+    {% if resultat is defined %}
+    <button id="down">
+        Afficher les Résultats <br>
+        <i class="fas fa-angle-double-down" style="margin-top: 5px;"></i>
+    </button>
+    {% endif %}
 
     <a href="{{ url_for('views.home') }}" id="retour">
         <i class="fas fa-backward"></i>
@@ -260,43 +291,33 @@
 
 
     <form action = "{{ url_for('views.upload', algo=methode) }}" method = "POST" enctype = "multipart/form-data">
-        <input id="upload" type = "file" name = "file" hidden/>
-        <label for="upload">
+        <input  type = "file" name = "file" hidden/>
+        <label id="upload" for="upload">
             Charger Votre Propre Fichier
             <i class="fas fa-upload"></i>
         </label> <br>
-        <select id="obj" name="obj">
+        <select id="obj" name="obj" style="width:280px;margin: auto;">
             <option value="obj1">Objectif 1</option>
             {% if methode != 'Algorithme Polynomiale' %}
                 <option value="obj2">Objectif 2</option>
             {% endif %}
         </select> <br>
-        <input type = "submit"/>
+        <label id="notice" for="obj" style="font-size: 15px; line-height: 1.4;">
+            Le fichier <span style="color: red;font-weight: bold;">TXT</span> doit comporter dans la première ligne <b>le nombre de tâches</b>, dans la 
+            deuxième ligne <b>la durée de chaque tâche</b> et dans la troisième ligne la date d'échéance de chaque tâche et pour 
+            <span style="color: red;font-weight: bold;">l'objectif 2</span>, en plus de ces trois lignes, vous devez ajouter une quatrième ligne 
+            qui contient <b>les poids alpha_i</b>. et une cinquième qui comporte <b>les poids beta_i</b>.
+        </label>
+        <input type = "submit" value = "valider" style="width:180px;margin: auto;"/>
     </form>
     
-    <script>
-        $(document).ready(function() {
-            $("#down").click(function() {
-                $("html, body").animate({
-                    scrollTop: $(
-                      'html, body').get(0).scrollHeight
-                }, 1000);
-            });
-        });
-    </script>
 
     {% if resultat is defined %}
-    <button id="down">
-        Afficher les Résultats <br>
-        <i class="fas fa-angle-double-down" style="margin-top: 5px;"></i>
-    </button>
-    
     <div>
-        <p>                    
-            
-            
-            La solution de la fonction objectif est : {{ resultat[0] }} <br><br>
-
+        <p style="line-height: 1.7;">                    
+            La solution de la fonction objectif est : <span style="font-size:18px;color:rgb(3, 239, 98);">{{ resultat[0] }}</span> <br>
+            Le temps d'exécution est : <span style="font-size:18px;color:rgb(3, 239, 98);">{{ resultat[2] }} s</span> <br><br>
+        </p>
             <div style="text-align: center; margin-bottom: 20px;">
                 <button>Temps de début</button><button class="tache">Numéro de la Tache</button><button>Temps de fin</button>
             </div>
@@ -308,10 +329,11 @@
                 {% endif %}
             {% endfor %}
             <br><br>
-                
+            
+            
     {% endif %}
 
-        </p>
+        
     </div>
 </div>
     

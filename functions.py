@@ -57,7 +57,7 @@ def fuun(y,e):
     y.remove(ele_a_retire)  # retirer  la tache 
     return y,mx,ele_a_retire # le mx pour   deduction de la dure de lache retir & ele_a_retire pour garder les elements retiree dans une list  
 def fff(e):
-    print('8*****************************8')
+    now = time.time()
     e.sort(key=lambda  k:(k[2])) #  ordonner les taches selant les dates d’échéance des tâches di
     somme_pi=0# somme des durie des tache qui ne sont pas en retard (les tache qui sont dans la liste t1)
     t1=[]# cette liste va contiet les taches qui ne sont pas en retard 
@@ -78,7 +78,7 @@ def fff(e):
     for j in t1:# diagramme de gant 
         tt.append([j[0],c,c+j[1]])
         c+=j[1]
-    return (foct_obje, tt)  
+    return (foct_obje, tt, time.time() - now)  
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 #                        metaheyristique   
@@ -174,6 +174,7 @@ def Rvns(x, temps):
         
 
 def met_fun1(x, nbTaches):
+    now = time.time()
     if nbTaches <= 10:
         temps = 10
     elif nbTaches <= 50:
@@ -223,7 +224,7 @@ def met_fun1(x, nbTaches):
     for j in x:
          tt.append([j[0],c,c+j[1]])
          c+=j[1]  
-    return (val,tt)
+    return (val,tt, time.time() - now)
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 #                        metaheyristique   
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
@@ -257,6 +258,7 @@ def val_obj_fun1(seq):
 
 start_time=time.time()
 def met_fun2(x, nbTaches):
+    now = time.time()
     
     if nbTaches <= 10:
         temps = 10
@@ -288,7 +290,7 @@ def met_fun2(x, nbTaches):
                # k=0
             k+=1
     #print(val)   
-    return val
+    return (val[0], val[1], time.time() - now)
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 #                                             dynamique pro  
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
@@ -352,6 +354,7 @@ def recursionFunction(lst,id):
 
       return min
 def fc_ob(data):
+    now = time.time()
     global identifier
     for x in powerset(data):
     # for i in range(1,len(data)+1):
@@ -370,7 +373,7 @@ def fc_ob(data):
         tt.append([j[0],c,c+j[1]])
         c+=j[1]
     lst = list(results.items())
-    return lst[-1][1],tt
+    return (lst[-1][1],tt,time.time() - now)
 
 # lst = list(results.items())
 # print(lst[-1][1])
@@ -438,6 +441,7 @@ def recursionFunction2(lst,id):
         return 0
     
 def fo_ob2(data):
+     now = time.time()
      global identifier
      for x in powerset(data):
          identifier =",".join("'%s'" % a[0] for a in x)
@@ -448,7 +452,7 @@ def fo_ob2(data):
      for j in seq[identifier]:
          tt.append([j[0],c,c+j[1]])
          c+=j[1]
-     return (lst[-1][1],tt)
+     return (lst[-1][1],tt,time.time() - now)
 # for i in range(1,len(data)+1):
 #     sample = list(itertools.combinations(data, i))
 #     for iteam in sample:
